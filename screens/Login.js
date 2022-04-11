@@ -1,79 +1,76 @@
-
-import React, {useState, useEffect} from 'react';
-import { View, Image, TextInput } from 'react-native';
+import React from 'react'
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Button
+} from 'react-native'
+import { CheckBox,Input} from 'react-native-elements';
 import style from '../style/mainStyle.js';
-import { CheckBox,Text, Input, Button} from 'react-native-elements';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios';
+import axios from 'axios'
 
+const Login = () => {
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
 
+  const handleSubmit = e => {
+    e.preventDefault()
+    axios
+      .post('http://localhost:3100/user/login', {
+        email: email,
+        password: password
+      })
 
-export default function Login() {
-    const EnviarFormulario = async(mail,pass) =>{
-        try{
-            const response = await axios.post('http://localhost:3100/user/login',{"email":mail, "password":pass })
-            const data = await response.json()
-            console.log(data)
+      .then(function (response) {
+        if (response.data.auth){
+            console.log('entrou')
         }
-        catch(err){
-            console.log(err)
-        }
-    
-    }
-    const [mail, setMail] = useState('')
-    const [user, setUser] = useState('')
-    const [pass, setPass] = useState('')
-    const [checkvalue, setcheckvalue]= useState(false);
-    
-  return(
-        <View style={style.container}>
-            <View style={style.img}>
-                <Image source={require('../assets/logo.png')}/></View>
+      })
+      .then(() => {})
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
-            <Text style={style.Title}>e-FOL</Text>
-            
-            <View style={style.input}>
-                    <Input
-                    value={user}
-                    placeholder="User"
-                    leftIcon={{ type: 'font-awesome', name: 'user' }}
-                    onChange={(user)=> setUser(user.target.value)}
-                    />
-                    <Input
-                    value={mail}
-                    placeholder="mail"
-                    leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                    onChange={(mail)=> setMail(mail.target.value)}/>                    
-                    <Input
-                    value={pass}
-                    placeholder="Password"
-                    secureTextEntry
-                    leftIcon={{ type: 'font-awesome', name: 'key' }}
-                    onChange={(pass)=> setPass(pass.target.value)}/>
-            </View>
+  return (
+    <SafeAreaView style={style.container}>
+      <SafeAreaView style={style.input}>
+      <Input
+        leftIcon={{ type: 'font-awesome', name: 'user' }}
+        style={styles.input}
+        value={email}
+        onChange={e => {
+          setEmail(e.target.value)
+        }}
+        placeholder="email"
+        keyboardType="email-address"
+      />
 
-            <View style={style.button}>           
-                <Button 
-                    icon={<Icon 
-                    name="check"
-                    size={15} 
-                    color='white'/>}
-                    title='Login'
-                    onPress={EnviarFormulario(mail,pass)}/>
-            </View>
-
-            <View style={style.checkbox}>
-                <CheckBox
-                title='Eu aceito os termos de politica de uso de dados'
-                checkedIcon='dot-circle-o'
-                uncheckedIcon='circle-o'
-                checkedColor='green'
-                uncheckedColor='red'
-                checked= {checkvalue}
-                onPress={()=>setcheckvalue(!checkvalue)}/>
-            </View> 
-        </View>
-
-  );
+      <Input
+        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+        style={styles.input}
+        value={password}
+        onChange={e => {
+          setPassword(e.target.value)
+        }}
+        placeholder="password"
+        keyboardType="visible-password"
+      />
+      </SafeAreaView>
+      <Button type="submit" onPress={handleSubmit} title="Login"></Button>
+    </SafeAreaView>
+  )
 }
 
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10
+  }
+})
+
+export default Login
