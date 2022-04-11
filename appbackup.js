@@ -29,7 +29,6 @@ export default function Login() {
         <View style={style.container}>
             <View style={style.img}>
                 <Image source={require('../assets/logo.png')}/></View>
-
             <Text style={style.Title}>e-FOL</Text>
             
             <View style={style.input}>
