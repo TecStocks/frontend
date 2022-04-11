@@ -2,19 +2,15 @@ import React from 'react'
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Button
 } from 'react-native'
-import { CheckBox,Input} from 'react-native-elements';
+import { CheckBox, Image,Button,Input} from 'react-native-elements';
 import style from '../style/mainStyle.js';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios'
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-
   const handleSubmit = e => {
     e.preventDefault()
     axios
@@ -26,6 +22,8 @@ const Login = () => {
       .then(function (response) {
         if (response.data.auth){
             console.log('entrou')
+            navigation.navigate('Search')
+
         }
       })
       .then(() => {})
@@ -33,9 +31,11 @@ const Login = () => {
         console.log(error)
       })
   }
-
   return (
-    <SafeAreaView style={style.container}>
+  <SafeAreaView style={style.container}>
+      <SafeAreaView style={style.img}>
+
+      </SafeAreaView>
       <SafeAreaView style={style.input}>
       <Input
         leftIcon={{ type: 'font-awesome', name: 'user' }}
@@ -51,6 +51,7 @@ const Login = () => {
       <Input
         leftIcon={{ type: 'font-awesome', name: 'envelope' }}
         style={styles.input}
+        secureTextEntry
         value={password}
         onChange={e => {
           setPassword(e.target.value)
@@ -59,7 +60,16 @@ const Login = () => {
         keyboardType="visible-password"
       />
       </SafeAreaView>
-      <Button type="submit" onPress={handleSubmit} title="Login"></Button>
+      <SafeAreaView style={style.button}>
+      <Button 
+          icon={<Icon 
+          name="check"
+          size={20} 
+          color='white'/>}
+          title=' Login' 
+          onPress={handleSubmit}
+      />
+      </SafeAreaView>
     </SafeAreaView>
   )
 }
