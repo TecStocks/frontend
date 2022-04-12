@@ -1,39 +1,12 @@
 import { Button, Input,ListItem, Avatar } from 'react-native-elements';
 import { StyleSheet, View,Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { color } from 'react-native-elements/dist/helpers';
 
   
-export default function DailyFOLs(){
-    const list = [
-        {
-          name: 'FOL1',
-          subtitle: 'Descricao1'
-        },
-        {
-          name: 'FOL2',
-          subtitle: 'Descricao1'
-        },
-        
-        {
-            name: 'FOL3',
-            subtitle: 'Descricao1'
-          },
-        
-          {
-            name: 'FOL4',
-            subtitle: 'Descricao1'
-          },
-          
-        {
-            name: 'FOL5',
-            subtitle: 'Descricao1'
-          },
-        
-          {
-            name: 'FOL6',
-            subtitle: 'Descricao1'
-          },
-      ]
+export default function DailyFOLs(List){
+    {/*Carregar a list com as FOLs do BD*/}
+    const list = List;
 
     return (
         <View style={styles.container}>
@@ -48,8 +21,8 @@ export default function DailyFOLs(){
                 list.map((l, i) => (
                 <ListItem key={i} bottomDivider>
                     <ListItem.Content style={styles.row}>
-                    <ListItem.Title style={{marginRight:'50%'}}>{l.name}</ListItem.Title>
-                    <ListItem.Subtitle style={{}}>{l.subtitle}</ListItem.Subtitle>
+                    <ListItem.Title style={{marginRight:'50%'}}><Button type='clear' title={l.name} onPress={''}/></ListItem.Title>
+                    <ListItem.Subtitle style={{}}><Button type='clear' title={l.subtitle} onPress={''}/></ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
                 ))
@@ -61,8 +34,7 @@ export default function DailyFOLs(){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        marginTop: '50%',
+        marginTop: '15%',
         backgroundColor: '#c5eaf6',
     },
     row:{
