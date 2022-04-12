@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar, Button, Input } from 'react-native-elements';
+import {useState} from 'react';
 
 export default function Header() {
+    const [user, editUser] = useState('');
+
   return (
     <View>
        <View style={styles.row}>
@@ -15,16 +18,16 @@ export default function Header() {
             'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
         }}
         >
-        <Avatar.Accessory icon={{}} />
+        <Avatar.Accessory icon={{}} type='Button' onPress={(user)=> editUser(user)}/>
         </Avatar>
         </View>
        
         <View style={styles.home}>
-            <Button icon={<Icon name="home" size={30} color="black" />} type="clear" />
+            <Button icon={<Icon name="home" size={30} color="black" />} type="clear" onPress={() => this.props.navigation.navigate('Search')}/>
         </View>
 
         <View style={styles.logout}>
-        <Button icon={<Icon name="sign-out" size={30} color="black" />} type="clear" />
+        <Button icon={<Icon name="sign-out" size={30} color="black" />} type="clear" onPress={() => ''}/>
         </View>
 
        </View>
@@ -35,19 +38,15 @@ export default function Header() {
 const styles = StyleSheet.create({
     row:{
         flexDirection: 'row',
-        margin: '2%',
-        flex: 1,
+        margin: '5%',
         justifyContent: 'center',
     },
     logout:{
-        flex: 1,
     },
     home:{
         marginLeft: '30%',
-        flex: 1,
         marginRight: '30%',
     },
     user:{
-        flex: 1,
     }
 });
