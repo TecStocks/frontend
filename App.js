@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Routes from './rotes';
+import Routes from './src/rotes';
 
 
    export default function App() {

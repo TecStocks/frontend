@@ -1,14 +1,17 @@
 import React from 'react'
+import { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
+  Image
 } from 'react-native'
-import { CheckBox, Image,Button,Input} from 'react-native-elements';
+import { CheckBox, Input, Button} from 'react-native-elements';
+import  Icon  from 'react-native-vector-icons/FontAwesome'
 import style from '../style/mainStyle.js';
-import  Icon  from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios'
+import axios from 'axios';
 
 const Login = ({navigation}) => {
+  
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const handleSubmit = e => {
@@ -31,15 +34,20 @@ const Login = ({navigation}) => {
         console.log(error)
       })
   }
-  return (
-  <SafeAreaView style={style.container}>
-      <SafeAreaView style={style.img}>
+  const [checkvalue, setcheckvalue]= useState(false);
 
+  return (
+<SafeAreaView style={style.container}>
+      
+      <SafeAreaView style={style.container}>
+        <Image 
+        style={style.img}
+        source={require('../assets/logo.png')} />
       </SafeAreaView>
-      <SafeAreaView style={style.input}>
+
+      <SafeAreaView style={style.act}>
       <Input
-        leftIcon={{ type: 'font-awesome', name: 'user' }}
-        style={styles.input}
+        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'user-o' }}
         value={email}
         onChange={e => {
           setEmail(e.target.value)
@@ -47,11 +55,11 @@ const Login = ({navigation}) => {
         placeholder="email"
         keyboardType="email-address"
       />
-
+      </SafeAreaView>
+    <SafeAreaView style={style.act}>
       <Input
-        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-        style={styles.input}
-        secureTextEntry
+      secureTextEntry
+        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'envelope-o' }}
         value={password}
         onChange={e => {
           setPassword(e.target.value)
@@ -61,26 +69,36 @@ const Login = ({navigation}) => {
       />
       </SafeAreaView>
       <SafeAreaView style={style.button}>
-      <Button 
+        <Button 
           icon={<Icon 
           name="check"
           size={20} 
           color='white'/>}
+          buttonStyle={{
+            borderRadius: 30,
+            backgroundColor: '#0D0D0D',
+          }}
           title=' Login' 
           onPress={handleSubmit}
       />
       </SafeAreaView>
+      <SafeAreaView style={style.checkbox}>
+        <CheckBox
+        style={style.checkbox}
+        title='Eu aceito os termos de politica de uso de dados'
+        checkedIcon='dot-circle-o'
+        uncheckedIcon='circle-o'
+        checkedColor='green'
+        uncheckedColor='red'
+        checked= {checkvalue}
+        onPress={()=>setcheckvalue(!checkvalue)}
+        />
+        </SafeAreaView>
     </SafeAreaView>
   )
 }
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10
-  }
-})
+
 
 export default Login
+
