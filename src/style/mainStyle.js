@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     container:{
+        flex:1,
         backgroundColor: '#F2F2F2',      
     },
 
@@ -20,15 +21,15 @@ export default StyleSheet.create({
         paddingVertical: 10,
     },
     img:{
+        marginTop:80,
+        width:290,
         marginLeft:'15%',
         marginRight:'15%',
-        marginTop:'15%',
-        width:300,
         resizeMode:'contain',
 
     },
-    input:{
-        marginTop:'10%',
+    act:{
+        flexDirection: 'row',
     },
     checkbox:{
 
@@ -38,10 +39,20 @@ export default StyleSheet.create({
         marginRight:'5%',
     },
     button:{
-        marginTop:'5%',
-        marginLeft:'35%',
-        marginRight:'35%',
+        padding:10,
+        marginTop:'10%',
+        marginLeft:'20%',
+        marginRight:'20%',
     },
-/**/
+/*   
+
+    
+          borderRadius:130,
+        borderWidth: 1,
+        paddingto:10,
+        marginTop:'10%',
+        marginLeft:'20%',
+        marginRight:'20%',
+    */
 
 })
