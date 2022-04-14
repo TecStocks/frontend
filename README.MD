@@ -36,7 +36,7 @@ that able to inform the client.</p>
 
 --------------------------------------------------------------------------------------------------------------------
 <section id="Branches_assigments">
-       <h2><i>Branches</i>for each assignment</h2>
+       <h2><i>Branches</i> for each assignment</h2>
        <table>
               <thead>
                      <th width=100px>Assigments</th>
