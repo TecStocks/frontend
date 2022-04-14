@@ -93,7 +93,7 @@ To have a communication between the screens, we realized the building of some sy
 
 
 <h4>First Assignment 📇</h4>
- <h1 align="center"> <img src="./assets/Backlog.png">
+ <h1 align="center"> <img src="./Assets/Backlog.PNG">
 
 
 --------------------------------------------------------------------------------------------------------------------
