@@ -73,8 +73,7 @@ that able to inform the client.</p>
 ## :hourglass_flowing_sand: **_System sprint cards:_**
 
 <section id="cards">
-       <h3><i>Cards</i> das <i>sprints</i>system</h3>
-       <h4> First Assignment :clock12:</h4>
+           <h4> First Assignment :clock12:</h4>
        <p align="justify">We carried out the screens project, so the client is able to visualise how is gonna be the visual part in the system.
 
 We started the DataBase development, where the datas will be analysed to have actualized informations
