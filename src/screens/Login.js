@@ -12,20 +12,20 @@ import axios from 'axios';
 
 const Login = ({navigation}) => {
   
-  const [email, setEmail] = React.useState('')
+  const [login, setLogin] = React.useState('')
   const [password, setPassword] = React.useState('')
   const handleSubmit = e => {
     e.preventDefault()
     axios
       .post('http://localhost:3100/user/login', {
-        email: email,
+        login: login,
         password: password
       })
 
       .then(function (response) {
-        if (response.data.auth){
-            console.log('entrou')
-            navigation.navigate('Search')
+        if (response){
+            console.log(console.data)
+           navigation.navigate('Search')
 
         }
       })
@@ -47,19 +47,18 @@ const Login = ({navigation}) => {
 
       <SafeAreaView style={style.act}>
       <Input
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'user-o' }}
-        value={email}
+        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'user' }}
+        value={login}
         onChange={e => {
-          setEmail(e.target.value)
+          setLogin(e.target.value)
         }}
-        placeholder="email"
-        keyboardType="email-address"
+        placeholder="User"
       />
       </SafeAreaView>
     <SafeAreaView style={style.act}>
       <Input
       secureTextEntry
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'envelope-o' }}
+        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'key' }}
         value={password}
         onChange={e => {
           setPassword(e.target.value)
@@ -85,7 +84,7 @@ const Login = ({navigation}) => {
       <SafeAreaView style={style.checkbox}>
         <CheckBox
         style={style.checkbox}
-        title='Eu aceito os termos de politica de uso de dados'
+        title='Eu aceito os termos de politica de privacidade e uso de dados'
         checkedIcon='dot-circle-o'
         uncheckedIcon='circle-o'
         checkedColor='green'
