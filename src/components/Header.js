@@ -2,8 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar, Button, Input } from 'react-native-elements';
 import {useState} from 'react';
+import { CommonActions, CommonNavigationAction } from '@react-navigation/native';
 
-export default function Header() {
+const Nav = path =>{
+    CommonActions.navigate('Home');
+}
+
+const Header= ({navigation}) =>  {
     const [user, editUser] = useState('');
 
   return (
@@ -23,7 +28,7 @@ export default function Header() {
         </View>
        
         <View style={styles.home}>
-            <Button icon={<Icon name="home" size={30} color="black" />} type="clear" onPress={() => this.props.navigation.navigate('Search')}/>
+            <Button icon={<Icon name="home" size={30} color="black" />} type="clear" onPress={Nav}/>
         </View>
 
         <View style={styles.logout}>
@@ -34,6 +39,7 @@ export default function Header() {
     </View>
   );
 }
+export default Header
 
 const styles = StyleSheet.create({
     row:{
