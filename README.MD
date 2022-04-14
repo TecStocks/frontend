@@ -1,13 +1,10 @@
 <p><img src="https://img.shields.io/badge/Sprint%201-Concluído-green?style=for-the-badge&logo=appveyor"></p>
 <p>
 <img src="https://img.shields.io/badge/Technology-ReactNative-9cf">
-<img src="https://img.shields.io/badge/Technology-Java Web Server-Side-9cf">
-<img src="https://img.shields.io/badge/Technology-MariaDB-9cf">
 <img src="https://img.shields.io/badge/Technology-MongoDB-9cf">
 <img src="https://img.shields.io/badge/Technology-SpringBoot-9cf">
 <img src="https://img.shields.io/badge/Technology-JavaScript-9cf">
 <img src="https://img.shields.io/badge/Technology-CSS-9cf">
-<img src="https://img.shields.io/badge/Technology-Python-9cf">
 </p>
 
 --------------------------------------------------------------------------------------------------------------------
