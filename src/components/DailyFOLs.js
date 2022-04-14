@@ -1,41 +1,40 @@
 import { Button, Input,ListItem, Avatar } from 'react-native-elements';
-import { StyleSheet, View,Text } from 'react-native';
+import { StyleSheet, View,Text, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { color } from 'react-native-elements/dist/helpers';
+import Header from './Header';
 
   
-export default function DailyFOLs(List){
-    {/*Carregar a list com as FOLs do BD*/}
-    const list = List;
-    console.log(list)
-    return (
+const DailyFOLs= ({route}) => {
+    const list = route.params.paramKey;
+
+    return (     
         <View style={styles.container}>
-            
+            <Header/>
             <View style={styles.row}>
                 <Text style={styles.textA}>FOL</Text>
-                <Text style={styles.textB}>Description</Text>
+                <Text style={styles.textB}>Category</Text>
             </View>
-            
-            {/* <View>
-                {
+             {
                 list.map((l, i) => (
                 <ListItem key={i} bottomDivider>
                     <ListItem.Content style={styles.row}>
-                    <ListItem.Title style={{marginRight:'50%'}}><Button type='clear' title={l.Title} onPress={''}/></ListItem.Title>
-                    <ListItem.Subtitle style={{}}><Button type='clear' title={l.Category} onPress={''}/></ListItem.Subtitle>
+                    <ListItem.Title style={styles.title}><Button type='clear' title={l.Title} onPress={''}/></ListItem.Title>
+                    <ListItem.Subtitle style={styles.category}><Button type='clear' title={l.Category} onPress={''}/></ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
                 ))
-                }
-            </View>          */}
+                }      
         </View>
     );
 }
+export default DailyFOLs
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '15%',
-        backgroundColor: '#c5eaf6',
+        justifyContent: 'space-between',
+        flex: 1,
+
     },
     row:{
         flexDirection: 'row',
@@ -47,5 +46,12 @@ const styles = StyleSheet.create({
     textB:{
         fontSize: 20,
         marginLeft: '50%',
+    },
+    title:{
+        width: '50%',
+    },
+    category:{
+        width: '50%',
+        textAlign: 'right',
     }
 });
