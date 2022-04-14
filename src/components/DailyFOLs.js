@@ -7,7 +7,7 @@ import { color } from 'react-native-elements/dist/helpers';
 export default function DailyFOLs(List){
     {/*Carregar a list com as FOLs do BD*/}
     const list = List;
-
+    console.log(list)
     return (
         <View style={styles.container}>
             
@@ -16,18 +16,18 @@ export default function DailyFOLs(List){
                 <Text style={styles.textB}>Description</Text>
             </View>
             
-            <View>
+            {/* <View>
                 {
                 list.map((l, i) => (
                 <ListItem key={i} bottomDivider>
                     <ListItem.Content style={styles.row}>
-                    <ListItem.Title style={{marginRight:'50%'}}><Button type='clear' title={l.name} onPress={''}/></ListItem.Title>
-                    <ListItem.Subtitle style={{}}><Button type='clear' title={l.subtitle} onPress={''}/></ListItem.Subtitle>
+                    <ListItem.Title style={{marginRight:'50%'}}><Button type='clear' title={l.Title} onPress={''}/></ListItem.Title>
+                    <ListItem.Subtitle style={{}}><Button type='clear' title={l.Category} onPress={''}/></ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
                 ))
                 }
-            </View>         
+            </View>          */}
         </View>
     );
 }

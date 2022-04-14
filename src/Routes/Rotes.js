@@ -1,6 +1,6 @@
 import React from "react";
-import Login from './screens/Login';
-import Search from './screens/Search'
+import Login from '../screens/Login';
+import Search from '../screens/Search'
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Routes = () =>{

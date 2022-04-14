@@ -9,7 +9,7 @@ export default function Search() {
     <View style={styles.container}>
       <Header/>
       <Pesquisa/>
-      <DailyFOLs/>
+      {/* {DailyFOLs()} */}
     </View>
   );
 }
