@@ -52,13 +52,13 @@ that able to inform the client.</p>
                             <td><a href="">Sprint 1</td>
                      </tr>
                      <tr>
-                            <td>Second Entrega</td>
+                            <td>Second Assignment</td>
                             <td> </td>
                             <td>25/04 - 15/05</td>
                             <td><a href="">Sprint 2</td>
                      </tr>
                      <tr>
-                            <td>Third Entrega</td>
+                            <td>Third Assignment</td>
                             <td></td>
                             <td>16/05 - 05/06</td>
                             <td><a href="">Sprint 3</a></td>
