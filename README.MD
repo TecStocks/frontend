@@ -17,7 +17,7 @@
 <p align="justify"> Creating a mobile platform with the objective manage Files that informs the user
 about his vehicle and actualizations about the documentations.
 
-Align with the strategic objectives to be achived by each equipament 
+Align with the strategic objectives to be achived by each equipment 
 that able to inform the client.</p>
 
 
@@ -30,12 +30,15 @@ that able to inform the client.</p>
 --------------------------------------------------------------------------------------------------------------------
 ##  🏬 Partners
 
-              <p align="justify">
+<p align="justify">
                      ▶️  <a href="http://fatecsjc-prd.azurewebsites.net/">FATEC - São José dos Campos</a>.
               </p>
-
+              <p align="justify">
+                     ▶️  <a href="https://embraer.com/br/pt">EMBRAER</a>.
+              </p>
+       
 --------------------------------------------------------------------------------------------------------------------
-<section id="Branches_assigments">
+<section id="Branches_assignments">
        <h2><i>Branches</i> for each assignment</h2>
        <table>
               <thead>
@@ -47,7 +50,7 @@ that able to inform the client.</p>
               <tbody>
                      <tr>
                             <td>First Assignment</td>
-                            <td>Screen prototypes, login area and user's screen</td>
+                            <td>Screen prototypes, search FOL's, user's screen, login area</td>
                             <td>25/03 - 14/04</td>
                             <td><a href="">Sprint 1</td>
                      </tr>
@@ -72,9 +75,9 @@ that able to inform the client.</p>
 --------------------------------------------------------------------------------------------------------------------
 ## :hourglass_flowing_sand: **_System sprint cards:_**
 
-<section id="cards">
+<section id="cards" > <img align="center" src= "./Assets/Card1.PNG"> </img>
            <h4> First Assignment :clock12:</h4>
-       <p align="justify">We carried out the screens project, so the client is able to visualise how is gonna be the visual part in the system.
+       <p align="justify">We carried out the screens project, so the client is able to visualize how is gonna be the visual part in the system.
 
 We started the DataBase development, where the datas will be analysed to have actualized informations
 
@@ -100,7 +103,7 @@ To have a communication between the screens, we realized the building of some sy
 ## :bookmark: **_BURNDOWN_**
 
 <p align="justify">
-                     📈 To see the BURNDOWN, click <a href="">here</a>.
+                     <img src="./Assets/burndown.png"></img>
               </p>
  
 
