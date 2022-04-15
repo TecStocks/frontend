@@ -91,7 +91,7 @@ To have a communication between the screens, we realized the building of some sy
 
 ## :bookmark: **_Total Backlog_**
 
-<h1><i>System</i><i>sprints</i>Backlog</h1>
+<h1><i>System </i><i> sprints</i> Backlog</h1>
 
 
 <h4>First Assignment 📇</h4>
