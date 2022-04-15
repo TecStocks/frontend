@@ -1,7 +1,6 @@
 import React from "react";
 import Login from '../screens/Login';
 import Search from '../screens/Search'
-import FOLs from "../screens/FOLs";
 import { createStackNavigator } from '@react-navigation/stack';
 import Pesquisa from "../components/Pesquisa";
 import DailyFOLs from "../components/DailyFOLs";
