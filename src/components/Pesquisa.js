@@ -57,7 +57,7 @@ const Pesquisa = ({navigation}) =>
             for(let a = 0; a <= carros.length; a++){
               if(carros[a] == resp){
                 for(let y=0; y<=keyw.length; y++){
-                  if(keyword == keyw[y]){
+                  if(keyword == keyw[y] || keyword == ''){
                     fols.push(response.data[i])
                   }
                 }          

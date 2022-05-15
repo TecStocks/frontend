@@ -4,7 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { color } from 'react-native-elements/dist/helpers';
 import Header from './Header';
 
-  
+let pdfV = 'https://drive.google.com/file/d/1b4lI_kdoZRoyTUo6SuMBLEqt3DFjiUyV/view'
+
+const pdf = e => {
+    navigation.navigate('pdfView', {
+        paramKey: pdfV,
+      })
+}
 const DailyFOLs= ({route}) => {
     const list = route.params.paramKey;
 
@@ -19,7 +25,7 @@ const DailyFOLs= ({route}) => {
                 list.map((l, i) => (
                 <ListItem key={i} bottomDivider>
                     <ListItem.Content style={styles.row}>
-                    <ListItem.Title style={styles.title}><Button type='clear' title={l.Title} onPress={''}/></ListItem.Title>
+                    <ListItem.Title style={styles.title}><Button type='clear' title={l.Title} onPress={pdf}/></ListItem.Title>
                     <ListItem.Subtitle style={styles.category}><Button type='clear' title={l.Category} onPress={''}/></ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
