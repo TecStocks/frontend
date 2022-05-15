@@ -1,42 +1,82 @@
 import React from 'react'
-import { useState } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Image
-} from 'react-native'
-import { CheckBox, Input, Button} from 'react-native-elements';
-import  Icon  from 'react-native-vector-icons/FontAwesome'
-import style from '../style/mainStyle.js';
 import axios from 'axios';
+import { useState } from 'react';
+import style from '../style/mainStyle.js';
+import {SafeAreaView,Image} from 'react-native'
+import  Icon  from 'react-native-vector-icons/FontAwesome'
+import { CheckBox, Input, Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+
 
 const Login = ({navigation}) => {
-  
+
   const [login, setLogin] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [checkvalue, setcheckvalue]= useState(false);
+  const [equip,setEquip] = useState([]);
+  let id;
+
   const handleSubmit = e => {
     e.preventDefault()
     axios
       .post('http://localhost:3100/user/login', {
         login: login,
-        password: password
+        password: password,
       })
 
       .then(function (response) {
         if (response){
-            console.log(console.data)
-           navigation.navigate('Search')
+          id = response.data._id
+          console.log(id)
+          let i = 0
+          let a = 0
+          equip.push('')
+          for(a=0; a<=30; a++){
+            if(response.data.equipment[a] == null){break;}
+            else if(response.data.equipment[a] != ','){
+                if(response.data.equipment[a] == ' ' || response.data.equipment[a] == ''){}
+                else{
 
-        }
+                  equip[i]  += response.data.equipment[a]
+                }
+
+            }else{
+              i++
+              equip.push('')
+            }
+          }
+          //salvar
+          AsyncStorage.setItem(
+            'equip',
+            JSON.stringify(equip),
+          );
+          AsyncStorage.setItem(
+            'id',
+            JSON.stringify(id),
+          );
+          //carregar 
+          AsyncStorage.getItem('equip', (err, result) => {
+            let cars = JSON.parse(result)
+            console.log(cars);
+          });
+          AsyncStorage.getItem('id', (err, result) => {
+            console.log('id: ', result);
+          });
+
+          setEquip(equip)
+          navigation.navigate('Home')
+      
+      }
       })
       .then(() => {})
       .catch(function (error) {
         console.log(error)
       })
   }
-  const [checkvalue, setcheckvalue]= useState(false);
 
-  return (
+
+    return (
 <SafeAreaView style={style.container}>
       
       <SafeAreaView style={style.container}>
@@ -100,4 +140,3 @@ const Login = ({navigation}) => {
 
 
 export default Login
-
