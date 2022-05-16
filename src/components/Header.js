@@ -4,12 +4,14 @@ import { Avatar, Button, Input } from 'react-native-elements';
 import {useState} from 'react';
 import { CommonActions, CommonNavigationAction } from '@react-navigation/native';
 
-const Nav = path =>{
-    CommonActions.navigate('Home');
-}
-
+     
 const Header= ({navigation}) =>  {
-    const [user, editUser] = useState('');
+    const User = e => {
+        e.preventDefault()
+        navigation.navigate('Search')}
+    const Logout = e => {
+        e.preventDefault()
+        navigation.navigate('Login')}
 
   return (
     <View>
@@ -23,16 +25,13 @@ const Header= ({navigation}) =>  {
             'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
         }}
         >
-        <Avatar.Accessory icon={{}} type='Button' onPress={(user)=> editUser(user)}/>
+        <Avatar.Accessory icon={{}} type='Button' onPress={ ()=>{navigation.navigate('Search');}}/>
         </Avatar>
         </View>
        
-        <View style={styles.home}>
-            <Button icon={<Icon name="home" size={30} color="black" />} type="clear" onPress={Nav}/>
-        </View>
 
         <View style={styles.logout}>
-        <Button icon={<Icon name="sign-out" size={30} color="black" />} type="clear" onPress={() => ''}/>
+        <Button icon={<Icon name="sign-out" size={30} color="black" />} type="clear" onPress={Logout}/>
         </View>
 
        </View>

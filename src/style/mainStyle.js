@@ -44,6 +44,12 @@ export default StyleSheet.create({
         marginLeft:'20%',
         marginRight:'20%',
     },
+    
+    buttonDel:{
+        width: '50%',
+        marginHorizontal: 50,
+        marginVertical: 10,
+    },
 /*   
 
     
