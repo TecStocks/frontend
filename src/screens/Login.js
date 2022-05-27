@@ -20,15 +20,13 @@ const Login = ({navigation}) => {
   const handleSubmit = e => {
     e.preventDefault()
     axios
-      .post('http://localhost:3100/user/login', {
+      .post('http://34.229.199.142:3100/user/login', {
         login: login,
         password: password,
       })
 
       .then(function (response) {
         if (response){
-          id = response.data._id
-          console.log(id)
           let i = 0
           let a = 0
           equip.push('')
@@ -65,7 +63,7 @@ const Login = ({navigation}) => {
           });
 
           setEquip(equip)
-          navigation.navigate('Home')
+          navigation.navigate('Search')
       
       }
       })
@@ -87,7 +85,7 @@ const Login = ({navigation}) => {
 
       <SafeAreaView style={style.act}>
       <Input
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'user' }}
+        leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'user' }}
         value={login}
         onChange={e => {
           setLogin(e.target.value)
@@ -98,7 +96,7 @@ const Login = ({navigation}) => {
     <SafeAreaView style={style.act}>
       <Input
       secureTextEntry
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'key' }}
+        leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'key' }}
         value={password}
         onChange={e => {
           setPassword(e.target.value)
@@ -122,16 +120,7 @@ const Login = ({navigation}) => {
       />
       </SafeAreaView>
       <SafeAreaView style={style.checkbox}>
-        <CheckBox
-        style={style.checkbox}
-        title='Eu aceito os termos de politica de privacidade e uso de dados'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        checkedColor='green'
-        uncheckedColor='red'
-        checked= {checkvalue}
-        onPress={()=>setcheckvalue(!checkvalue)}
-        />
+       
         </SafeAreaView>
     </SafeAreaView>
   )

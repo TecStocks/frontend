@@ -12,7 +12,7 @@ const handleSubmit = e => {
 
     e.preventDefault()
     axios
-      .post('http://localhost:3100/user/remove', {
+      .post('http://34.229.199.142:3100/user/remove', {
         chave: id
       })
 

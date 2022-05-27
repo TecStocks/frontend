@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         margin: '5%',
         justifyContent: 'center',
     },
-    logout:{
+    logout:{marginLeft:'60%'
     },
     home:{
         marginLeft: '30%',

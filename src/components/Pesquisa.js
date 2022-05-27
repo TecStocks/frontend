@@ -1,12 +1,19 @@
-import { Button, Input } from 'react-native-elements';
-import { StyleSheet, View } from 'react-native';
+import { Button,Avatar, Input } from 'react-native-elements';
+import { StyleSheet, View,Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, {useState, setState} from 'react';
-import DailyFOLs from './DailyFOLs';
 import axios from 'axios';
-import { NavigationContext, StackActions } from '@react-navigation/native';
 import Header from './Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
+
+let equips = []
+function getCars(){
+    AsyncStorage.getItem('equip', (err, result) => {
+        equips = JSON.parse(result)
+        console.log(equips);
+    });  
+}
 
 const Pesquisa = ({navigation}) => 
 {
@@ -18,7 +25,7 @@ const Pesquisa = ({navigation}) =>
   const handleSubmit = e => {
     e.preventDefault()
     axios
-      .post('http://localhost:3100/fols', {
+      .post('http://34.229.199.142:3100/fols', {
         car:car,
       })
 
@@ -27,7 +34,7 @@ const Pesquisa = ({navigation}) =>
           AsyncStorage.getItem('equip', (err, result) => {
             carros = JSON.parse(result)
             setCar(carros)
-            console.log(carros)
+            console.log(car)
           });
 
           for(let i = 0; i <= response.data.length; i++){
@@ -80,11 +87,69 @@ const Pesquisa = ({navigation}) =>
   }
 
   return (
+    getCars(),
     <View style={styles.container}>
-      <Header/>
-      <Input placeholder='Car:' value={car} onChange={(car)=> setCar(car.target.value)}/>
-      <Input placeholder='keyword:' value={keyword} onChange={(keyword)=> setKeyword(keyword.target.value)}/>
-      <Button icon={<Icon name="search" size={30} color="black"/>} type="clear" title='Search' titleStyle={{color: 'black'}}
+          <View>
+       <View style={styles.row}>
+        
+       <View style={styles.user}>
+        <Avatar rounded
+        size={'medium'}  
+        source={{
+            uri:
+            'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
+        }}
+        >
+        <Avatar.Accessory icon={{}} type='Button' onPress={ ()=>{navigation.navigate('User');}}/>
+        </Avatar>
+        </View>
+       
+
+        <View style={styles.logout}>
+        <Button 
+          icon={<Icon 
+          name="sign-out"
+          size={40} 
+          color='black'/>}
+          buttonStyle={{
+            borderRadius: 10,
+            backgroundColor: '#F2F2F2',
+          }}
+        onPress={ ()=>{navigation.navigate('Login')}}
+      />
+       </View>
+
+       </View>
+    </View>
+      <View style={styles.viw}>
+              <Text style={{justifyContent:'flex-start',}}>Selected car:</Text>
+              <Picker
+              selectedValue={car}
+              style={{ height: "100%", width: "60%", 
+              fontSize: 20, textAlign: 'center', marginLeft: '10%'
+          }}
+              onValueChange={(itemValue) =>
+                setCar(itemValue)
+            }>   
+            <Picker.Item label="Selecione" value=""/>
+            {                   
+              equips.map((l, i) => (               
+                <Picker.Item label={l} value={l} key={i}/>                
+                ))
+            }      
+        </Picker>
+        </View>
+        <View style={styles.keyw}>
+        <Input 
+        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'list-alt' }}
+        keyboardType="visible-password"
+        placeholder='keyword:'
+        value={keyword} 
+        onChange={(keyword)=> setKeyword(keyword.target.value)}/>
+        
+        </View>
+
+      <Button style={styles.espaçamento} icon={<Icon name="search" size={30} color="black"/>} type="clear" title='Search' titleStyle={{color: 'black'}}
       onPress={handleSubmit}/>
 
     </View>
@@ -99,5 +164,35 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '5%',
   },
-});
+  espaçamento:{
+      marginTop:'5%',
+  },
+  row:{
+    flexDirection: 'row',
+    margin: '5%',
+    justifyContent: 'center',
+},
+logout:{marginLeft:'50%'
+},
+home:{
+    marginLeft: '30%',
+    marginRight: '30%',
+},
+  keyw:{
+    flex:1, 
+    marginTop:'10%',
+    marginLeft:'10%',
+    marginRight:'10%',
+    borderRadius: 8,
+    color: "#666",
+    backgroundColor: "#eaeaea"
+  },
+viw:{
+  marginTop:'10%',
+  flexDirection: 'row',
+  marginLeft:'10%',
+  marginRight:'10%',
+  justifyContent: 'flex-start',
+}
 
+});
