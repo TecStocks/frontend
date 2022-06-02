@@ -11,21 +11,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = ({navigation}) => {
 
-  const [login, setLogin] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [checkvalue, setcheckvalue]= useState(false);
+  const [login, setLogin] = React.useState("")
+  const [password, setPassword] = React.useState("")
   const [equip,setEquip] = useState([]);
   let id;
 
+
   const handleSubmit = e => {
     e.preventDefault()
-    axios
-      .post('http://34.229.199.142:3100/user/login', {
+    console.log(login,password)
+    console.log(login,password)
+    axios.post('http://52.202.196.108:3100/user/login/', {
         login: login,
         password: password,
+      
       })
-
+      
       .then(function (response) {
+        console.log(response)
         if (response){
           let i = 0
           let a = 0
@@ -67,9 +70,9 @@ const Login = ({navigation}) => {
       
       }
       })
-      .then(() => {})
       .catch(function (error) {
-        console.log(error)
+        console.log('Passou aquiaaaaaaaaaa') 
+        console.log(error.message)
       })
   }
 
@@ -82,27 +85,26 @@ const Login = ({navigation}) => {
         style={style.img}
         source={require('../assets/logo.png')} />
       </SafeAreaView>
-
+      
       <SafeAreaView style={style.act}>
+      
+      
       <Input
+        style={{color:'white'}}
         leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'user' }}
         value={login}
-        onChange={e => {
-          setLogin(e.target.value)
-        }}
+        onChangeText={(text)=>setLogin(text) }
         placeholder="User"
       />
       </SafeAreaView>
     <SafeAreaView style={style.act}>
       <Input
-      secureTextEntry
-        leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'key' }}
-        value={password}
-        onChange={e => {
-          setPassword(e.target.value)
-        }}
-        placeholder="password"
-        keyboardType="visible-password"
+      style={{color:'white'}}
+      secureTextEntry={true} 
+      leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'key' }}
+      onChangeText={(text)=>setPassword(text) }
+      placeholder="password"
+        
       />
       </SafeAreaView>
       <SafeAreaView style={style.button}>

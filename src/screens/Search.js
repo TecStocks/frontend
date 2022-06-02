@@ -7,7 +7,6 @@ export default function Search() {
   return (
     
     <View style={styles.container}>
-      <Header/>
       <Pesquisa/>
     </View>
   );

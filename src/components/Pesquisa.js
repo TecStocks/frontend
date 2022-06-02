@@ -25,7 +25,7 @@ const Pesquisa = ({navigation}) =>
   const handleSubmit = e => {
     e.preventDefault()
     axios
-      .post('http://34.229.199.142:3100/fols', {
+      .post('http://52.202.196.108:3100/fols/', {
         car:car,
       })
 

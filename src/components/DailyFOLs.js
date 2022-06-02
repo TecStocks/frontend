@@ -11,12 +11,43 @@ const pdf = e => {
         paramKey: pdfV,
       })
 }
-const DailyFOLs= ({route}) => {
+const DailyFOLs= ({route,navigation}) => {
     const list = route.params.paramKey;
 
     return (     
         <View style={styles.container}>
-            <Header/>
+         <View style={styles.container}>
+         
+       <View style={styles.row}>
+        
+       <View style={styles.user}>
+        <Avatar rounded
+        size={'medium'}  
+        source={{
+            uri:
+            'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
+        }}
+        >
+        <Avatar.Accessory icon={{}} type='Button' onPress={ ()=>{navigation.navigate('User');}}/>
+        </Avatar>
+        </View>
+       
+
+        <View style={styles.logout}>
+        <Button 
+          icon={<Icon 
+          name="sign-out"
+          size={40} 
+          color='black'/>}
+          buttonStyle={{
+            borderRadius: 10,
+            backgroundColor: '#F2F2F2',
+          }}
+        onPress={ ()=>{navigation.navigate('Search')}}
+      />
+       </View> </View> 
+
+       </View>
             <View style={styles.row}>
                 <Text style={styles.textA}>FOL</Text>
                 <Text style={styles.textB}>Category</Text>
@@ -59,5 +90,13 @@ const styles = StyleSheet.create({
     category:{
         width: '50%',
         textAlign: 'right',
-    }
+    },
+
+        row:{
+          flexDirection: 'row',
+          margin: '5%',
+          justifyContent: 'center',},
+      logout:{marginLeft:'50%'
+      },  
+      
 });
