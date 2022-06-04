@@ -5,7 +5,7 @@ import Pesquisa from "../components/Pesquisa";
 import DailyFOLs from "../components/DailyFOLs";
 import Header from "../components/Header";
 import User from '../screens/Usuario'
-import pdfView from "../screens/pdfView";
+import pdfView from "../screens/PdfView";
 
 const Routes = () =>{
     const Stack = createStackNavigator();

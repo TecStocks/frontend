@@ -6,6 +6,7 @@ import {SafeAreaView,Image} from 'react-native'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import { CheckBox, Input, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import BackgroundFetchScreen from '../tasks/Notification.js';
 
 
 
@@ -79,7 +80,7 @@ const Login = ({navigation}) => {
 
     return (
 <SafeAreaView style={style.container}>
-      
+      {BackgroundFetchScreen()}
       <SafeAreaView style={style.container}>
         <Image 
         style={style.img}
