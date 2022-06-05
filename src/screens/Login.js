@@ -29,8 +29,8 @@ const Login = ({navigation}) => {
       })
       
       .then(function (response) {
-        console.log(response)
         if (response){
+          id = response.data._id
           let i = 0
           let a = 0
           equip.push('')
@@ -39,7 +39,6 @@ const Login = ({navigation}) => {
             else if(response.data.equipment[a] != ','){
                 if(response.data.equipment[a] == ' ' || response.data.equipment[a] == ''){}
                 else{
-
                   equip[i]  += response.data.equipment[a]
                 }
 

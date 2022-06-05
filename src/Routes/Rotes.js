@@ -5,7 +5,7 @@ import Pesquisa from "../components/Pesquisa";
 import DailyFOLs from "../components/DailyFOLs";
 import Header from "../components/Header";
 import User from '../screens/Usuario'
-import pdfView from "../screens/PdfView";
+import PdfView from "../screens/PdfView";
 
 const Routes = () =>{
     const Stack = createStackNavigator();
@@ -17,7 +17,7 @@ const Routes = () =>{
           <Stack.Screen options={{headerShown: false}} name="Search" component={Pesquisa} />
           <Stack.Screen options={{headerShown: false}} name="FOLs" component={DailyFOLs} />
           <Stack.Screen options={{headerShown: false}} name="Header" component={Header } />
-          <Stack.Screen options={{headerShown: false}} name="pdf" component={pdfView} />
+          <Stack.Screen options={{headerShown: false}} name="pdf" component={PdfView} />
 
          </Stack.Navigator>
       );
