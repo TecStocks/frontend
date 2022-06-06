@@ -104,8 +104,7 @@ const Login = ({navigation}) => {
             console.log('id: ', result);
           });
 
-          setEquip(equip)
-          BackgroundFetchScreen()
+          setEquip(equip)         
           navigation.navigate('Search')
       
       }
@@ -120,7 +119,7 @@ const Login = ({navigation}) => {
 
     if(isLoad == false){
       return (
-        <SafeAreaView style={style.container}>             
+        <SafeAreaView style={style.container}>           
               <SafeAreaView style={style.container}>
                 <Image 
                 style={style.img}
@@ -170,7 +169,7 @@ const Login = ({navigation}) => {
     }
   if (isLoad) {
     return <ActivityIndicator size="large" color="#00ff00" style={{flex: 1,
-      justifyContent: "center"}} />
+      justifyContent: "center"}} />; 
   }
 }
 
