@@ -105,6 +105,7 @@ const Login = ({navigation}) => {
           });
 
           setEquip(equip)
+          BackgroundFetchScreen()
           navigation.navigate('Search')
       
       }
@@ -119,8 +120,7 @@ const Login = ({navigation}) => {
 
     if(isLoad == false){
       return (
-        <SafeAreaView style={style.container}>
-              {BackgroundFetchScreen()}
+        <SafeAreaView style={style.container}>             
               <SafeAreaView style={style.container}>
                 <Image 
                 style={style.img}

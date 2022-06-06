@@ -6,7 +6,7 @@ import { Notifications } from 'expo';
 
 const BACKGROUND_FETCH_TASK = 'background-fetch';
 const localNotification = { title: 'FOLs foram atualizadas', body: 'Verifique o App' };
-const [cars, setCars] = useState([]);
+const cars = [];
 let id;
 
 async function updateFOLs(){
@@ -56,15 +56,17 @@ export default function BackgroundFetchScreen() {
 
   useEffect(() => {
     const getCars = async () => {
-      let result = []
+      try{
+        let result = []
       result = await AsyncStorage.getItem('equip');
         
       if (result == null) {
         cars = []
       } else {
         cars = []
-        setCars(JSON.parse(result)) 
+        cars = JSON.parse(result) 
       }
+      }catch{}
     }
     getCars();
   }, []);
