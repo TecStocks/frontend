@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import style from '../style/mainStyle.js';
-import {SafeAreaView,Image, Alert,Text} from 'react-native'
+import {SafeAreaView,Image, Alert,Text, ActivityIndicator} from 'react-native'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import { CheckBox, Input, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -11,31 +11,33 @@ import BackgroundFetchScreen from '../tasks/Notification.js';
 
 const Login = ({navigation}) => {
 
-  const [login, setLogin] = React.useState("")
-  const [password, setPassword] = React.useState("")
-  const [isLoad, setIsLoad] = useState(false);
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoad, setIsLoad] = useState(true);
   let [equip,setEquip] = useState([]);
   let id;
 
-  // useEffect(() => {
-  //   const auth = async () => {
-  //     let user = ''
-  //     let pass = ''
+  useEffect(() => {
+    const auth = async () => {
+      let user = ''
+      let pass = ''
 
-  //     try{
-  //       user = await AsyncStorage.getItem('login');
-  //       pass = await AsyncStorage.getItem('pass');
-  //     }catch{}
+      try{
+        user = await AsyncStorage.getItem('login');
+        pass = await AsyncStorage.getItem('pass');
+        login = JSON.parse(user)
+        password = JSON.parse(pass)
+        console.log("login carregado")
+        handleSubmit
+        setIsLoad(false);
+      }catch{}
+      finally{
+        setIsLoad(false);
+      }
       
-        
-  //     if (user != null && pass != null) {
-  //       login = JSON.parse(user)
-  //       password = JSON.parse(pass)
-  //     }
-  //     setIsLoad(false);
-  //   }
-  //   auth();
-  // }, []);
+    }
+    auth();
+  }, []);
 
   function alertbutton(){
       Alert.alert(
@@ -118,7 +120,7 @@ const Login = ({navigation}) => {
     if(isLoad == false){
       return (
         <SafeAreaView style={style.container}>
-              {/* {BackgroundFetchScreen()} */}
+              {BackgroundFetchScreen()}
               <SafeAreaView style={style.container}>
                 <Image 
                 style={style.img}
@@ -167,7 +169,8 @@ const Login = ({navigation}) => {
           )
     }
   if (isLoad) {
-    return <Text>Carregando...</Text> // Informa o usuário que está carregando
+    return <ActivityIndicator size="large" color="#00ff00" style={{flex: 1,
+      justifyContent: "center"}} />
   }
 }
 

@@ -6,6 +6,7 @@ import { Notifications } from 'expo';
 
 const BACKGROUND_FETCH_TASK = 'background-fetch';
 const localNotification = { title: 'FOLs foram atualizadas', body: 'Verifique o App' };
+const [cars, setCars] = useState([]);
 let id;
 
 async function updateFOLs(){
@@ -16,17 +17,20 @@ async function updateFOLs(){
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   axios
-      .post('http://localhost:3100/admin/notification', {
-        _id: id,
-      })
+      .get('http://52.202.196.108:3001/admin/notification')
 
       .then(function (response) {
         if (response){
-          //if(id == id){}
-          updateFOLs();
+          for(let i = 0; i <= response.data.length; i++){
+            if(response.data[i] == null){break}
+            for(let a=0; a<=30; a++){
+              if(response.data.Equipment[i] == cars[a]){
+                updateFOLs();
+              }
+            }
+          }         
         }
       })
-      .then(() => {})
       .catch(function (error) {
         console.log(error)
       })
@@ -49,6 +53,21 @@ async function unregisterBackgroundFetchAsync() {
 export default function BackgroundFetchScreen() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [status, setStatus] = React.useState(null);
+
+  useEffect(() => {
+    const getCars = async () => {
+      let result = []
+      result = await AsyncStorage.getItem('equip');
+        
+      if (result == null) {
+        cars = []
+      } else {
+        cars = []
+        setCars(JSON.parse(result)) 
+      }
+    }
+    getCars();
+  }, []);
 
   React.useEffect(() => {
     checkStatusAsync();

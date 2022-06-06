@@ -1,5 +1,5 @@
 import { Button,Avatar, Input } from 'react-native-elements';
-import { StyleSheet, View,Text } from 'react-native';
+import { StyleSheet, View,Text, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -162,7 +162,8 @@ const Pesquisa = ({navigation}) =>
     );
   }
   if (isLoading) {
-    return <Text>Carregando...</Text> // Informa o usuário que está carregando
+    return <ActivityIndicator size="large" color="#00ff00" style={{flex: 1,
+      justifyContent: "center"}} />
   }
   
 }
