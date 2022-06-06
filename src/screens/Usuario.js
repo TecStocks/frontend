@@ -3,7 +3,7 @@ import mainStyle from '../style/mainStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-
+import { StyleSheet, View,Text } from 'react-native';
 let id
 
 const handleSubmit = e => {
@@ -12,7 +12,7 @@ const handleSubmit = e => {
 
     e.preventDefault()
     axios
-      .post('http://localhost:3100/user/remove', {
+      .post('http://34.230.86.67:3100/user/remove/', {
         chave: id
       })
 
@@ -29,9 +29,28 @@ const handleSubmit = e => {
   })
 }
 
-export default function User() {
+export default function User({navigation}) {
   return (
-    <Button
+    <View style={styles.container}>
+    <View>
+ <View style={styles.row}>
+  <View style={styles.logout}>
+  <Button 
+    icon={<Icon 
+    name="sign-out"
+    size={40} 
+    color='black'/>}
+    buttonStyle={{
+      borderRadius: 10,
+      backgroundColor: '#F2F2F2',
+    }}
+  onPress={ ()=>{navigation.navigate('Search')}}
+/>
+</View>
+
+ </View>
+</View>
+<Button
       style={mainStyle.buttonDel}
       icon={<Icon size={20} color="Red" name="user" />}
       buttonStyle={{
@@ -41,5 +60,17 @@ export default function User() {
       title="Delete Account"
       onPress={handleSubmit}
     />
+</View>
   )
+
+
 }
+const styles = StyleSheet.create({
+row:{
+  flexDirection: 'row',
+  margin: '5%',
+  justifyContent: 'center',},
+
+logout:{marginLeft:'50%'},
+  
+})

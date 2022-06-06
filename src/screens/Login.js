@@ -1,49 +1,89 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
 import style from '../style/mainStyle.js';
-import {SafeAreaView,Image} from 'react-native'
+import {SafeAreaView,Image, Alert,Text, ActivityIndicator} from 'react-native'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import { CheckBox, Input, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import BackgroundFetchScreen from '../tasks/Notification.js';
 
 
 
 const Login = ({navigation}) => {
 
-  const [login, setLogin] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [checkvalue, setcheckvalue]= useState(false);
-  const [equip,setEquip] = useState([]);
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoad, setIsLoad] = useState(true);
+  let [equip,setEquip] = useState([]);
   let id;
 
+  useEffect(() => {
+    const auth = async () => {
+      let user = ''
+      let pass = ''
+
+      try{
+        user = await AsyncStorage.getItem('login');
+        pass = await AsyncStorage.getItem('pass');
+        login = JSON.parse(user)
+        password = JSON.parse(pass)
+        console.log("login carregado")
+        handleSubmit
+        setIsLoad(false);
+      }catch{}
+      finally{
+        setIsLoad(false);
+      }
+      
+    }
+    auth();
+  }, []);
+
+  function alertbutton(){
+      Alert.alert(
+        "Login error",
+        "Incorrect username or password",
+        [
+          { text: "OK", onPress: () => navigation.navigate("login") }
+        ]
+      );  }   
+  
   const handleSubmit = e => {
     e.preventDefault()
-    axios
-      .post('http://localhost:3100/user/login', {
+    axios.post('http://52.202.196.108:3002/login', {
         login: login,
-        password: password,
+        password: password, 
       })
-
+      
       .then(function (response) {
         if (response){
+          AsyncStorage.setItem(
+            'login',
+            JSON.stringify(login),
+          );
+          AsyncStorage.setItem(
+            'pass',
+            JSON.stringify(password),
+          );
+
+          console.log(response.data)
           id = response.data._id
-          console.log(id)
+
           let i = 0
           let a = 0
-          equip.push('')
+          equip = []
           for(a=0; a<=30; a++){
             if(response.data.equipment[a] == null){break;}
-            else if(response.data.equipment[a] != ','){
-                if(response.data.equipment[a] == ' ' || response.data.equipment[a] == ''){}
-                else{
-
-                  equip[i]  += response.data.equipment[a]
-                }
-
-            }else{
+            else{
+              console.log("add: ",response.data.equipment[a])
+              let l = response.data.equipment[a]
+              let q = ''
+              for(let u=0; u<=30; u++){
+                if(l[u] == null){break;}
+                else if(l[u] != ' '){q += l[u]}
+              }
+              equip.push(q)
               i++
-              equip.push('')
             }
           }
           //salvar
@@ -64,77 +104,73 @@ const Login = ({navigation}) => {
             console.log('id: ', result);
           });
 
-          setEquip(equip)
-          navigation.navigate('Home')
+          setEquip(equip)         
+          navigation.navigate('Search')
       
       }
       })
-      .then(() => {})
       .catch(function (error) {
-        console.log(error)
+        console.log('erro de login')
+        alertbutton()
+        console.log(error.message)
       })
   }
 
 
-    return (
-<SafeAreaView style={style.container}>
-      
-      <SafeAreaView style={style.container}>
-        <Image 
-        style={style.img}
-        source={require('../assets/logo.png')} />
-      </SafeAreaView>
-
-      <SafeAreaView style={style.act}>
-      <Input
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'user' }}
-        value={login}
-        onChange={e => {
-          setLogin(e.target.value)
-        }}
-        placeholder="User"
-      />
-      </SafeAreaView>
-    <SafeAreaView style={style.act}>
-      <Input
-      secureTextEntry
-        leftIcon={{ type: 'font-awesome',color:'black' ,size:20,name: 'key' }}
-        value={password}
-        onChange={e => {
-          setPassword(e.target.value)
-        }}
-        placeholder="password"
-        keyboardType="visible-password"
-      />
-      </SafeAreaView>
-      <SafeAreaView style={style.button}>
-        <Button 
-          icon={<Icon 
-          name="check"
-          size={20} 
-          color='white'/>}
-          buttonStyle={{
-            borderRadius: 30,
-            backgroundColor: '#0D0D0D',
-          }}
-          title=' Login' 
-          onPress={handleSubmit}
-      />
-      </SafeAreaView>
-      <SafeAreaView style={style.checkbox}>
-        <CheckBox
-        style={style.checkbox}
-        title='Eu aceito os termos de politica de privacidade e uso de dados'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        checkedColor='green'
-        uncheckedColor='red'
-        checked= {checkvalue}
-        onPress={()=>setcheckvalue(!checkvalue)}
-        />
-        </SafeAreaView>
-    </SafeAreaView>
-  )
+    if(isLoad == false){
+      return (
+        <SafeAreaView style={style.container}>           
+              <SafeAreaView style={style.container}>
+                <Image 
+                style={style.img}
+                source={require('../assets/logo.png')} />
+              </SafeAreaView>
+              
+              <SafeAreaView style={style.act}>
+              
+              
+              <Input
+                style={{color:'white'}}
+                leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'user' }}
+                value={login}
+                onChangeText={(text)=>setLogin(text) }
+                placeholder="User"
+              />
+              </SafeAreaView>
+            <SafeAreaView style={style.act}>
+              <Input
+              style={{color:'white'}}
+              secureTextEntry={true} 
+              leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'key' }}
+              onChangeText={(text)=>setPassword(text) }
+              placeholder="password"
+                
+              />
+              </SafeAreaView>
+              <SafeAreaView style={style.button}>
+                <Button 
+                  icon={<Icon 
+                  name="check"
+                  size={20} 
+                  color='white'/>}
+                  buttonStyle={{
+                    borderRadius: 30,
+                    backgroundColor: '#0D0D0D',
+                  }}
+                  title=' Login' 
+                  onPress={handleSubmit}
+              />
+              </SafeAreaView>
+              <SafeAreaView style={style.checkbox}>
+               
+                </SafeAreaView>
+            </SafeAreaView>
+          )
+    }
+  if (isLoad) {
+    return <ActivityIndicator size="large" color="#00ff00" style={{flex: 1,
+      justifyContent: "center"}} />; 
+  }
 }
 
 

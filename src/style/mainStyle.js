@@ -30,6 +30,11 @@ export default StyleSheet.create({
     },
     act:{
         flexDirection: 'row',
+        marginLeft:'10%',
+        marginRight:'10%',
+        borderRadius: 10,
+        marginTop:'2%',
+        backgroundColor: "#0D0D0D"
     },
     checkbox:{
 
