@@ -50,7 +50,8 @@ const DailyFOLs= ({route,navigation}) => {
             </View>
             <View style={styles.row}>
                 <Text style={styles.textA}>FOL</Text>
-                <Text style={styles.textB}>Category</Text>
+                <Text style={styles.textB}>Equipment</Text>
+                <Text style={styles.textC}>Category</Text>
             </View>
             <ScrollView>
              {
@@ -58,7 +59,8 @@ const DailyFOLs= ({route,navigation}) => {
                 <ListItem key={i} bottomDivider>
                     <ListItem.Content style={styles.row}>
                     <ListItem.Title style={styles.title}><Button type='clear' title={l.Title} onPress={() => {pdf(l.Title)}}/></ListItem.Title>
-                    <ListItem.Subtitle style={styles.category}><Button type='clear' title={l.Category} onPress={''}/></ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.category}><Button type='clear' title={l.Equipment} onPress={() => {pdf(l.Title)}}/></ListItem.Subtitle>
+                    <ListItem.Subtitle style={styles.descp}><Button type='clear' title={l['Issue description']} onPress={() => {pdf(l.Title)}}/></ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
                 ))
@@ -73,32 +75,40 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'space-between',
         flex: 1,
-
     },
     row:{
         flexDirection: 'row',
     },
     textA:{
         fontSize: 20,
-        marginLeft: '10%',
+        marginLeft: '0%',
     },
     textB:{
         fontSize: 20,
-        marginLeft: '50%',
+        marginLeft: '30%',
+    },
+    textC:{
+        fontSize: 20,
+        marginLeft: '30%',
     },
     title:{
-        width: '50%',
+        marginLeft: '5%',
+        marginRight: '15%',
     },
     category:{
-        width: '50%',
+        marginLeft: '0%',
+        textAlign: 'right',
+    },
+    descp:{
+        marginLeft: '0%',
         textAlign: 'right',
     },
 
-        row:{
-          flexDirection: 'row',
-          margin: '5%',
-          justifyContent: 'center',},
-      logout:{marginLeft:'50%'
-      },  
+    row:{
+        flexDirection: 'row',
+        margin: '5%',
+        justifyContent: 'center',},
+    logout:{marginLeft:'50%'
+    },  
       
 });

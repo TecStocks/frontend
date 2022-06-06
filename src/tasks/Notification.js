@@ -16,7 +16,7 @@ async function updateFOLs(){
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   axios
-      .post('http://localhost:3100/user/login', {
+      .post('http://localhost:3100/admin/notification', {
         _id: id,
       })
 
@@ -63,7 +63,7 @@ export default function BackgroundFetchScreen() {
 
   const toggleFetchTask = async () => {
     if (isRegistered) {
-      await unregisterBackgroundFetchAsync();
+      await unregisterBackgroundFetchAsync();      
     } else {
       await registerBackgroundFetchAsync();
     }
@@ -73,7 +73,7 @@ export default function BackgroundFetchScreen() {
 
   if(!isRegistered){
     console.log("not registered")
-    toggleFetchTask;
+    toggleFetchTask();
   }else{
     console.log("registered")
   }

@@ -11,18 +11,20 @@ let carros = []
 
 const Pesquisa = ({navigation}) => 
 {
-  const [car, setCar] = useState('');
-  const [fols, setFols] = useState([]);
-  const [keyword, setKeyword] = useState('');
+  let [car, setCar] = useState('');
+  let [fols, setFols] = useState([]);
+  let [keyword, setKeyword] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getCars = async () => {
-      const result = await AsyncStorage.getItem('equip');
+      let result = []
+      result = await AsyncStorage.getItem('equip');
         
       if (result == null) {
         carros = []
       } else {
+        carros = []
         carros = JSON.parse(result)
       }
       setIsLoading(false);
@@ -35,19 +37,20 @@ const Pesquisa = ({navigation}) =>
   const handleSubmit = e => {
     e.preventDefault()
     axios
-      .post('http://52.202.196.108:3100/fols/', {
+      .post('http://52.202.196.108:3001/fols', {
         car:car,
       })
 
       .then(function (response) {
-        if (response){           
+        if (response){  
+          fols = []         
           for(let i = 0; i <= response.data.length; i++){
             if(response.data[i] == null){break}
             else if(response.data.Status == "CANCELLED"){continue}
-            let resp = response.data[i].Equipment
+            let resp = response.data[i].equipment
             let keyw = []
             let e = 0
-            let key = response.data[i].Keywords
+            let key = response.data[i].Keywords          
             keyw.push('')
             for(let a=0; a<=30; a++){
               if(key[a] == null){break;}
@@ -61,11 +64,11 @@ const Pesquisa = ({navigation}) =>
                 e++
                 keyw.push('')
               }
-              console.log('keyword: ',keyw)
+              console.log('keyword: ',keyword)
             }
             for(let a = 0; a <= carros.length; a++){
               if(carros[a] == resp){
-                if(keyw.length > 0){
+                if(keyw.length > 1){
                 for(let y=0; y<=keyw.length; y++){
                   if(keyword == keyw[y] || keyword == ''){
                     fols.push(response.data[i])
@@ -149,8 +152,7 @@ const Pesquisa = ({navigation}) =>
           keyboardType="visible-password"
           placeholder='keyword:'
           value={keyword} 
-          onChangeText={(text)=> setKeyword(text)}/>
-          
+          onChangeText={(text)=> setKeyword(text)}/>      
           </View>
   
         <Button style={styles.espaçamento} icon={<Icon name="search" size={30} color="black"/>} type="clear" title='Search' titleStyle={{color: 'black'}}
