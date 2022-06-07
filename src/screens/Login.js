@@ -5,18 +5,38 @@ import {SafeAreaView,Image, Alert,Text, ActivityIndicator} from 'react-native'
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import { CheckBox, Input, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import BackgroundFetchScreen from '../tasks/Notification.js';
-
-
+import * as Location from 'expo-location';
 
 const Login = ({navigation}) => {
 
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
   const [isLoad, setIsLoad] = useState(true);
+  const [saveLogin, setSaveLogin] = useState(false);
+  const [saveLocal, setSaveLocal] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   let [equip,setEquip] = useState([]);
   let id;
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+  
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+  
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  }
+  
   useEffect(() => {
     const auth = async () => {
       let user = ''
@@ -57,14 +77,37 @@ const Login = ({navigation}) => {
       
       .then(function (response) {
         if (response){
-          AsyncStorage.setItem(
-            'login',
-            JSON.stringify(login),
-          );
-          AsyncStorage.setItem(
-            'pass',
-            JSON.stringify(password),
-          );
+
+          if(saveLogin == true){
+            AsyncStorage.setItem(
+              'login',
+              JSON.stringify(login),
+            );
+            AsyncStorage.setItem(
+              'pass',
+              JSON.stringify(password),
+            );
+          }
+          if(saveLocal == true){
+            let local = location["coords"];
+            local = local["latitude"] + "," + local["longitude"]
+            local = JSON.stringify(local)
+            let coord = ''
+            for(let i = 0; i < 20; i++){if(local[i] == null){break};if(local[i]!= '"'){coord += local[i]}}
+            console.log("COORDENADAS: ",local)
+            const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coord+'&key=AIzaSyAN61nshIHtWzYTT3Pqz3Xh8aF_RwFDcVM'
+            axios.get(url)
+            .then(function (response) {
+              if (response){
+                console.log('CIDADE: ', response.data.results[0].address_components[3].long_name)
+                console.log('ESTADO: ', response.data.results[0].address_components[4].long_name)
+                //axios post para salvar cidade e estado
+              }
+            }).catch(function (error) {
+              console.log(error);
+              console.log(url)
+            })
+          }
 
           console.log(response.data)
           id = response.data._id
@@ -162,8 +205,29 @@ const Login = ({navigation}) => {
               />
               </SafeAreaView>
               <SafeAreaView style={style.checkbox}>
-               
-                </SafeAreaView>
+              <CheckBox
+                style={style.checkbox}
+                title='Remember Login'
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                uncheckedColor='red'
+                checked= {saveLogin}
+                onPress={()=>setSaveLogin(!saveLogin)}
+                />
+                </SafeAreaView>  
+                <SafeAreaView style={style.checkbox}>
+              <CheckBox
+                style={style.checkbox}
+                title='I accept that my location is collected'
+                checkedIcon='dot-circle-o'
+                uncheckedIcon='circle-o'
+                checkedColor='green'
+                uncheckedColor='red'
+                checked= {saveLocal}
+                onPress={()=>setSaveLocal(!saveLocal)}
+                />
+                </SafeAreaView>            
             </SafeAreaView>
           )
     }

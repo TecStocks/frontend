@@ -2,31 +2,58 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Device from 'expo-device';
+import { Platform } from 'react-native';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const BACKGROUND_FETCH_TASK = 'background-fetch';
-const localNotification = { title: 'FOLs foram atualizadas', body: 'Verifique o App' };
-const cars = [];
-let id;
 
 async function updateFOLs(){
-  Notifications.scheduleLocalNotificationAsync(
-    localNotification,
-  );
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'FOLs foram atualizadas',
+      body: 'Verifique o App'
+    },
+    trigger: { seconds: 2 },
+  });
 };
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  axios
+    console.log("executando background task")
+    let result = []
+    let cars = []
+    result = await AsyncStorage.getItem('equip');
+      
+    if (result == null) {
+      cars = []
+    } else {
+      cars = []
+      cars = JSON.parse(result)
+      axios
       .get('http://52.202.196.108:3001/admin/notification')
 
       .then(function (response) {
-        if (response){
+        if (response && cars != null){ 
+          //console.log(response.data)     
           for(let i = 0; i <= response.data.length; i++){
             if(response.data[i] == null){break}
+            let carros = response.data[i]
+            console.log(carros.Equipment)
             for(let a=0; a<=30; a++){
-              if(response.data.Equipment[i] == cars[a]){
+              if(cars[a] == null){break;}
+              else if(carros.Equipment == cars[a]){
                 updateFOLs();
               }
+              else{console.log("Nao encontrado: ",cars[a])}
             }
           }         
         }
@@ -34,13 +61,35 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
       .catch(function (error) {
         console.log(error)
       })
-
+    }
   return BackgroundFetch.BackgroundFetchResult.NewData;
 });
+async function registerForPushNotificationsAsync() {
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+  }
 
-async function registerBackgroundFetchAsync() {
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+}
+async function registerBackgroundFetchAsync() {   
   return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 20, //Seconds
+    minimumInterval: 60, //Seconds
     stopOnTerminate: false,
     startOnBoot: true,
   });
@@ -51,29 +100,9 @@ async function unregisterBackgroundFetchAsync() {
 }
 
 export default function BackgroundFetchScreen() {
+  console.log("BackgroundFetchScreen chamada")
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [status, setStatus] = React.useState(null);
-
-  useEffect(() => {
-    const getCars = async () => {
-      try{
-        let result = []
-      result = await AsyncStorage.getItem('equip');
-        
-      if (result == null) {
-        cars = []
-      } else {
-        cars = []
-        cars = JSON.parse(result) 
-      }
-      }catch{}
-    }
-    getCars();
-  }, []);
-
-  React.useEffect(() => {
-    checkStatusAsync();
-  }, []);
 
   const checkStatusAsync = async () => {
     const status = await BackgroundFetch.getStatusAsync();
@@ -82,6 +111,11 @@ export default function BackgroundFetchScreen() {
     setIsRegistered(isRegistered);
   };
 
+  useEffect(() => {
+    checkStatusAsync();
+    registerForPushNotificationsAsync();
+  }, []);
+  
   const toggleFetchTask = async () => {
     if (isRegistered) {
       await unregisterBackgroundFetchAsync();      

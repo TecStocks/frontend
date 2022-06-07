@@ -6,15 +6,18 @@ import axios from 'axios';
 import Header from './Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import BackgroundFetchScreen from '../tasks/Notification';
 
 let carros = []
 
-const Pesquisa = ({navigation}) => 
+function Pesquisa({navigation})
 {
+  BackgroundFetchScreen()
   let [car, setCar] = useState('');
   let [fols, setFols] = useState([]);
   let [keyword, setKeyword] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     const getCars = async () => {
@@ -97,7 +100,7 @@ const Pesquisa = ({navigation}) =>
 
   if (isLoading == false) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container}>       
             <View>
          <View style={styles.row}>
           

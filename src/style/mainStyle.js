@@ -38,8 +38,8 @@ export default StyleSheet.create({
     },
     checkbox:{
 
-        marginTop:'50%',
-        marginBottom:'5%',
+        marginTop:'2%',
+        marginBottom:'2%',
         marginLeft:'5%',
         marginRight:'5%',
     },
