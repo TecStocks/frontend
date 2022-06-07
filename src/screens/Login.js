@@ -95,7 +95,7 @@ const Login = ({navigation}) => {
             let coord = ''
             for(let i = 0; i < 20; i++){if(local[i] == null){break};if(local[i]!= '"'){coord += local[i]}}
             console.log("COORDENADAS: ",local)
-            const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coord+'&key=AIzaSyAN61nshIHtWzYTT3Pqz3Xh8aF_RwFDcVM'
+            const url = ''
             axios.get(url)
             .then(function (response) {
               if (response){
