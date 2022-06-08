@@ -19,18 +19,18 @@ const Login = ({navigation}) => {
   let [equip,setEquip] = useState([]);
   let id;
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
   
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //   })();
+  // }, []);
   
   let text = 'Waiting..';
   if (errorMsg) {
@@ -41,20 +41,18 @@ const Login = ({navigation}) => {
     const auth = async () => {
       let user = ''
       let pass = ''
-
-      try{
+      let save = false
+      if(await AsyncStorage.getItem('saveLogin') != null){
+        save = await AsyncStorage.getItem('saveLogin');
+      }        
         user = await AsyncStorage.getItem('login');
-        pass = await AsyncStorage.getItem('pass');
-        login = JSON.parse(user)
-        password = JSON.parse(pass)
-        console.log("login carregado")
-        handleSubmit
-        setIsLoad(false);
-      }catch{}
-      finally{
-        setIsLoad(false);
-      }
-      
+        pass = await AsyncStorage.getItem('pass');    
+        setSaveLogin(save);   
+        setLogin(JSON.parse(user)) 
+        setPassword(JSON.parse(pass)) 
+        console.log("login carregado",save,'',saveLogin)
+        //handleSubmit
+        setIsLoad(false); 
     }
     auth();
   }, []);
@@ -86,28 +84,43 @@ const Login = ({navigation}) => {
             AsyncStorage.setItem(
               'pass',
               JSON.stringify(password),
+            );           
+            console.log("login salvo")
+          }else{
+            AsyncStorage.removeItem('login');
+            AsyncStorage.removeItem('pass');
+          }
+          AsyncStorage.setItem(
+            'saveLogin', 
+            JSON.stringify(saveLogin)
             );
-          }
-          if(saveLocal == true){
-            let local = location["coords"];
-            local = local["latitude"] + "," + local["longitude"]
-            local = JSON.stringify(local)
-            let coord = ''
-            for(let i = 0; i < 20; i++){if(local[i] == null){break};if(local[i]!= '"'){coord += local[i]}}
-            console.log("COORDENADAS: ",local)
-            const url = ''
-            axios.get(url)
-            .then(function (response) {
-              if (response){
-                console.log('CIDADE: ', response.data.results[0].address_components[3].long_name)
-                console.log('ESTADO: ', response.data.results[0].address_components[4].long_name)
-                //axios post para salvar cidade e estado
-              }
-            }).catch(function (error) {
-              console.log(error);
-              console.log(url)
-            })
-          }
+          // if(saveLocal == true){
+          //   let local = location["coords"];
+          //   local = local["latitude"] + "," + local["longitude"]
+          //   local = JSON.stringify(local)
+          //   let coord = ''
+          //   for(let i = 0; i < 20; i++){if(local[i] == null){break};if(local[i]!= '"'){coord += local[i]}}
+          //   console.log("COORDENADAS: ",local)
+          //   const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coord+'&key='
+          //   axios.get(url)
+          //   .then(function (response) {
+          //     if (response){
+
+          //       let cidade = response.data.results[0].address_components[3].long_name
+          //       let estado = response.data.results[0].address_components[4].long_name
+          //       console.log('CIDADE: ', cidade)
+          //       console.log('ESTADO: ', estado)
+                
+          //       // axios.post('http://52.202.196.108:3002/locate',{
+          //       //   cidade: cidade,
+          //       //   estado: estado,
+          //       // }).then(function (response) {if(response){console.log("CIDADE E ESTADO SALVOS")}})
+          //     }
+          //   }).catch(function (error) {
+          //     console.log(error);
+          //     console.log(url)
+          //   })
+          // }
 
           console.log(response.data)
           id = response.data._id
@@ -185,6 +198,7 @@ const Login = ({navigation}) => {
               style={{color:'white'}}
               secureTextEntry={true} 
               leftIcon={{ type: 'font-awesome',color:'white' ,size:20,name: 'key' }}
+              value={password}
               onChangeText={(text)=>setPassword(text) }
               placeholder="password"
                 
@@ -216,7 +230,7 @@ const Login = ({navigation}) => {
                 onPress={()=>setSaveLogin(!saveLogin)}
                 />
                 </SafeAreaView>  
-                <SafeAreaView style={style.checkbox}>
+                {/* <SafeAreaView style={style.checkbox}>
               <CheckBox
                 style={style.checkbox}
                 title='I accept that my location is collected'
@@ -227,7 +241,7 @@ const Login = ({navigation}) => {
                 checked= {saveLocal}
                 onPress={()=>setSaveLocal(!saveLocal)}
                 />
-                </SafeAreaView>            
+                </SafeAreaView>             */}
             </SafeAreaView>
           )
     }

@@ -31,6 +31,11 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     console.log("executando background task")
     let result = []
     let cars = []
+    let jaNots;
+    if( await AsyncStorage.getItem('jaNots') != null){    
+      jaNots = JSON.parse(await AsyncStorage.getItem('jaNots'))
+      console.log("jaNots carregado",jaNots)
+    }
     result = await AsyncStorage.getItem('equip');
       
     if (result == null) {
@@ -48,10 +53,40 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
             if(response.data[i] == null){break}
             let carros = response.data[i]
             console.log(carros.Equipment)
-            for(let a=0; a<=30; a++){
-              if(cars[a] == null){break;}
+            for(let a=0; a<=30; a++){                         
+              if(cars[a] == null){break;}             
               else if(carros.Equipment == cars[a]){
-                updateFOLs();
+                let jaNotificado = false
+
+                if(jaNots == null){
+                  console.log("jaNots null")
+                  jaNots = []
+                  jaNots[0] = carros._id
+                  AsyncStorage.setItem(
+                    'jaNots',
+                    JSON.stringify(jaNots),
+                  );              
+                  updateFOLs();
+                }
+                else{
+                  console.log("jaNots nao null")
+                  for(let b=0; b<=jaNots.length; b++){
+                    if(jaNots[b] == carros._id){
+                      console.log("jaNotificado: ",jaNots[b])
+                      jaNotificado = true
+                      break
+                    }
+                  }
+                  if(!jaNotificado){
+                    jaNots.push(carros._id)
+                    console.log("naoNotificado: ",carros._id)
+                    AsyncStorage.setItem(
+                      'jaNots',
+                      JSON.stringify(jaNots),
+                    );              
+                    updateFOLs();
+                  }
+                }                               
               }
               else{console.log("Nao encontrado: ",cars[a])}
             }
@@ -89,7 +124,7 @@ async function registerForPushNotificationsAsync() {
 }
 async function registerBackgroundFetchAsync() {   
   return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 60, //Seconds
+    minimumInterval: 10, //Seconds
     stopOnTerminate: false,
     startOnBoot: true,
   });

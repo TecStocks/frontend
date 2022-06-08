@@ -80,26 +80,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     textA:{
-        fontSize: 20,
+        fontSize: 15,
         marginLeft: '0%',
     },
     textB:{
-        fontSize: 20,
-        marginLeft: '30%',
+        fontSize: 15,
+        marginLeft: '15%',
     },
     textC:{
-        fontSize: 20,
+        fontSize: 15,
         marginLeft: '30%',
     },
     title:{
+        fontSize: 10,
         marginLeft: '5%',
-        marginRight: '15%',
+        marginRight: '1%',
     },
     category:{
+        fontSize: 10,
         marginLeft: '0%',
+        //marginRight: '1%',
         textAlign: 'right',
     },
     descp:{
+        fontSize: 5,
         marginLeft: '0%',
         textAlign: 'right',
     },
